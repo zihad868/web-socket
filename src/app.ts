@@ -1,11 +1,11 @@
+import path from "path";
 import express, { Application, NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import path from "path";
 import bodyParser from "body-parser";
-import router from "./app/routes";
-import GlobalErrorHandler from "./app/middlewares/globalErrorHandler";
+import router from "./app/routes"; // assuming this file exists
+import GlobalErrorHandler from "./app/middlewares/globalErrorHandler"; // assuming this file exists
 
 const app: Application = express();
 
@@ -31,8 +31,8 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-// app.use("/uploads", express.static(path.join("/var/www/uploads")));
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads"))); // Serve static files from the "uploads" directory
+// Serve static files from the "uploads" directory
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // Setup API routes
 app.use("/api/v1", router);
