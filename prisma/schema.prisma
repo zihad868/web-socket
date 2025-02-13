@@ -41,9 +41,11 @@ model User {
   otp       String?
   otpExpiry DateTime?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  admins    Admin?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  admins           Admin?
+  MessagesSent     Message[] @relation("MessagesSent")
+  MessagesReceived Message[] @relation("MessagesReceived")
 
   @@map("users")
 }
@@ -60,4 +62,17 @@ model Admin {
   updatedAt DateTime @updatedAt
 
   @@map("admins")
+}
+
+model Message {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  senderId   String
+  receiverId String
+  content    String
+
+  sender   User @relation("MessagesSent", fields: [senderId], references: [id])
+  receiver User @relation("MessagesReceived", fields: [receiverId], references: [id])
+
+  @@map("messages")
 }
