@@ -107,6 +107,17 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const createUser = catchAsync(async (req: Request, res: Response) => {
+  const user = await AuthServices.createUser(req);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User created success",
+    data: user,
+  });
+});
+
 export const AuthController = {
   loginUser,
   enterOtp,
@@ -115,4 +126,5 @@ export const AuthController = {
   changePassword,
   forgotPassword,
   resetPassword,
+  createUser,
 };

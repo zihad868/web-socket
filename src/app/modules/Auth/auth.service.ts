@@ -8,6 +8,7 @@ import ApiError from "../../../errors/ApiErrors";
 import { jwtHelpers } from "../../../helpars/jwtHelpers";
 import prisma from "../../../shared/prisma";
 import emailSender from "../../../helpars/emailSender/emailSender";
+import { Request } from "express";
 
 const loginUser = async (payload: { email: string; password: string }) => {
   const userData = await prisma.user.findUniqueOrThrow({
@@ -326,6 +327,22 @@ const resetPassword = async (
   return { message: "Password reset successfully" };
 };
 
+const createUser = async (req: Request) => {
+  const { firstName, lastName, phoneNumber, email, password } = req.body;
+
+  const user = await prisma.user.create({
+    data: {
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      password,
+    },
+  });
+
+  return user;
+};
+
 export const AuthServices = {
   loginUser,
   enterOtp,
@@ -333,4 +350,5 @@ export const AuthServices = {
   changePassword,
   forgotPassword,
   resetPassword,
+  createUser,
 };

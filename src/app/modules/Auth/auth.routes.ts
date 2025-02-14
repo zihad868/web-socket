@@ -32,4 +32,6 @@ router.post("/forgot-password", AuthController.forgotPassword);
 
 router.post("/reset-password", AuthController.resetPassword);
 
+router.post("/register", AuthController.createUser);
+
 export const AuthRoutes = router;
